@@ -1,0 +1,13 @@
+Source: indicator-workspaces
+Section: gnome
+Priority: extra
+Maintainer: George Dumitrescu <dumitrescugeorge@gmail.com>
+Build-Depends: debhelper (>= 7), cdbs, python, python-central
+Standards-Version: 3.8.1
+XS-Python-Version: all
+
+Package: indicator-workspaces
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Workspace Indicator
+ Provides a replacement for panel applet switcher.

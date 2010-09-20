@@ -1,0 +1,24 @@
+This package was debianized by George Dumitrescu <dumitrescugeorge@gmail.com> on
+Thu Aug 24 00:45:00 EET 2010
+
+Upstream Author(s):
+
+    George Dumitrescu
+
+Copyright:
+
+    <Copyright (C) George Dumitrescu>
+
+License:
+
+    GPL version 3
+
+The Debian packaging is:
+
+    Copyright (C) 2010 George Dumitrescu <dumitrescugeorge@gmail.com>
+
+and is licensed under the GPL version 3, 
+see `/usr/share/common-licenses/GPL-3'.
+
+# Please also look if there are files or directories which have a
+# different copyright/license attached and list them here.

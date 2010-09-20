@@ -1,0 +1,185 @@
+#!/usr/bin/python
+import pygtk
+pygtk.require('2.0')
+import gtk
+import appindicator
+import wnck
+import time
+import math
+import gconf
+
+ICON_THEME = gtk.icon_theme_get_default()
+
+class AppIndicatorWorkspace:
+
+    def __init__(self):
+        self.ind = appindicator.Indicator ("indicator-workspaces", "workspace", appindicator.CATEGORY_SYSTEM_SERVICES)
+        self.ind.set_status (appindicator.STATUS_ACTIVE)
+        self.ind.set_attention_icon ("workspaces")
+        self.set_icon()
+        
+        self.scr = wnck.screen_get_default()
+        self.scr.force_update()
+        
+        self.preferences(self)
+        
+        while gtk.events_pending():
+            gtk.main_iteration()
+            
+        self.initialize()
+        self.set_icon(self.active_desktop)
+        if self.is_virtual:
+            self.scr.connect('viewports-changed', self.ws_changed)
+        else:
+            self.scr.connect('active-workspace-changed', self.ws_changed)
+
+    def set_icon(self, ws = None):
+        if ws == None:
+            iInfo = ICON_THEME.lookup_icon("workspaces", 24, 0)
+            if iInfo:
+                self.ind.set_icon("workspaces")
+            else:
+                self.ind.set_icon("desktop")
+        else:
+            ic = "workspace-%d" % (ws+1)
+            iInfo = ICON_THEME.lookup_icon(ic, 24, 0)
+            if iInfo:
+                self.ind.set_icon(ic)
+            else:
+                self.set_icon()
+        
+
+    def _get_active_desktop(self):
+        ws = self.scr.get_active_workspace()
+        if self.use_viewports:
+            x = ws.get_viewport_x()/self.scr_width
+            y = ws.get_viewport_y()/self.scr_height
+            return self.num_hv * y + x
+        else:
+            return ws.get_number()
+    active_desktop = property(_get_active_desktop)
+
+    def _get_num_desktops(self):
+        if self.use_viewports:
+            return self.num_viewports
+        else:
+            return self.num_workspaces
+    num_desktops = property(_get_num_desktops)
+    
+    def update(self):
+        self.scr_width = self.scr.get_width()
+        self.scr_height = self.scr.get_height()
+        self.ws = self.scr.get_active_workspace()
+        self.is_virtual = self.ws.is_virtual()
+        self.num_workspaces = self.scr.get_workspace_count()
+        self.use_viewports = self.is_virtual and self.num_workspaces == 1
+        if self.use_viewports:
+            # the compiz path: 1 workspace and it is virtual
+            ws_width = self.ws.get_width()
+            ws_height = self.ws.get_height()
+            self.num_hv = ws_width/self.scr_width
+            self.num_vv = ws_height/self.scr_height
+            self.num_viewports = self.num_hv * self.num_vv
+        else:
+            # the metacity path: multiple workspaces or not virtual
+            self.num_viewports = 0
+        
+    def initialize(self):
+        self.gclient = gconf.client_get_default()
+        self.gclient.add_dir("/apps/metacity/workspace_names", gconf.CLIENT_PRELOAD_NONE);
+        self.update()
+        
+        # create a menu
+        self.menu = gtk.Menu()
+        self.aradio = []
+        
+        # desktops
+        for number in range(self.num_desktops):
+            label = "%d" % (number+1)
+            workspaceName = self.gclient.get_string('/apps/metacity/workspace_names/name_%d' % (number+1))
+            label = workspaceName or "Workspace %d" % (number+1)
+            self.gclient.notify_add("/apps/metacity/workspace_names/name_%d" % (number+1), self.ws_name_changed, number)
+            if number == 0:
+                self.aradio.append(gtk.RadioMenuItem(None, label))
+                self.aradio[number].set_active(True)
+            else:
+                self.aradio.append(gtk.RadioMenuItem(self.aradio[number-1], label))
+            self.aradio[number].connect("activate", self.switch_to_desktop, number)
+            self.aradio[number].show()
+            self.menu.append(self.aradio[number])
+            
+            
+        sepr = gtk.SeparatorMenuItem()
+        sepr.show()
+        self.menu.append(sepr)
+        
+        pref = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
+        pref.connect("activate", self.preferences)
+        pref.show()
+        pref.set_sensitive(False)
+        self.menu.append(pref)
+        
+        #quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        #quit.connect("activate", self.quit)
+        #quit.show()
+        #self.menu.append(quit)
+                    
+        self.menu.show()
+        self.ind.set_menu(self.menu)
+        
+        
+    def clear(self):
+        self.aradio = []
+        self.initialize()
+        
+    def switch_to_desktop(self, obj, number):
+        self.update()
+        if self.aradio[number].get_active():
+            if self.use_viewports:
+                # move to correct desktop
+                if self.num_vv == 0:
+                    x = self.scr_width * number
+                    self.scr.move_viewport(x, 0)
+                else:
+                    x = int(self.scr_width * (number - round(number/self.num_hv)*self.num_hv))
+                    y = int(self.scr_height * round(number/self.num_hv))
+                    self.scr.move_viewport(x, y)
+                
+            else:
+                timestamp = int(time.time())
+                self.scr.get_workspace(number).activate(timestamp)
+        
+    def preferences(self, opt):
+        wkPref = WorkspacesPreference()
+        
+    def ws_changed(self, scrm, opt = False):
+        # TODO: optimise
+        self.clear()
+        self.set_icon(self.active_desktop)
+        if not self.aradio[self.active_desktop].get_active():
+            self.aradio[self.active_desktop].set_active(True)
+        
+    def ws_name_changed(self, client, connection_id, widget, number):
+        workspaceName = self.gclient.get_string('/apps/metacity/workspace_names/name_%d' % (number+1))
+        self.aradio[number].set_label(workspaceName or "Workspace %d" % (number+1))
+    
+    def quit(self, widget, data=None):
+        gtk.main_quit()
+        
+class WorkspacesPreference(gtk.Window):
+    
+    def __init__(self):
+        
+        super(WorkspacesPreference, self).__init__()
+        
+        builder = gtk.Builder()
+        builder.add_from_file("workspaces-preferences.glade")
+        self = builder.get_object("window")
+        self.show_all()
+        
+def main():
+    gtk.main()
+
+if __name__ == "__main__":
+    indicator = AppIndicatorWorkspace()
+    main()

@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+DEB_PYTHON_SYSTEM=pycentral
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+install/indicator-workspaces ::
+	cp share/ubuntu-mono-dark/status/24/* debian/$(cdbs_curpkg)/usr/share/icons/ubuntu-mono-dark/status/24
+	cp share/ubuntu-mono-light/status/24/* debian/$(cdbs_curpkg)/usr/share/icons/ubuntu-mono-light/status/24
+	cp indicator-workspaces debian/$(cdbs_curpkg)/usr/bin/
+	
+binary-post-install/indicator-workspaces::
+	dh_icons /usr/share/icons/ubuntu-mono-dark
+	dh_icons /usr/share/icons/ubuntu-mono-light
+	
+clean ::
+	

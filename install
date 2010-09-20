@@ -1,0 +1,62 @@
+#!/bin/bash
+
+install_ct() {
+    # Create dir
+    mkdir -p $DATADIR 
+
+    # Copy files
+    cp share/ubuntu-mono-dark/status/24/* $DATADIR/ubuntu-mono-dark/status/24
+    cp share/ubuntu-mono-light/status/24/* $DATADIR/ubuntu-mono-light/status/24
+    cp indicator-workspaces $BINDIR/indicator-workspaces
+}
+
+uninstall_ct() {
+   
+    # Remove files
+    rm -fr $BINDIR/indicator-workspaces
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspaces.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-1.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-2.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-3.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-4.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-5.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-6.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-7.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-8.svg
+    rm -f $DATADIR/ubuntu-mono-dark/status/24/workspace-9.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspaces.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-1.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-2.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-3.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-4.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-5.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-6.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-7.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-8.svg
+    rm -f $DATADIR/ubuntu-mono-light/status/24/workspace-9.svg
+}
+
+# Change dir
+cd ${0%/*} &> /dev/null
+
+# Whoami
+if [ `whoami` != "root" ]; then
+    echo "Run this as root."
+    exit -1
+fi
+
+export DESTDIR=/usr
+export DATADIR=$DESTDIR/share/icons
+export BINDIR=$DESTDIR/bin
+
+if [ "$1" == "install" ]; then
+    install_ct
+    exit 0
+fi
+
+if [ "$1" == "uninstall" ]; then
+    uninstall_ct
+    exit 0
+fi
+
+echo "Usage: $0 [install|uninstall] destdir"

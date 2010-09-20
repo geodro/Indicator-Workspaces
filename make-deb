@@ -1,0 +1,30 @@
+#!/bin/bash
+
+DPGK_FLAGS=""
+if test "$1" == "--source" ;then
+    DPKG_FLAGS="-S -sa"
+fi
+if test "$1" == "--help" ;then
+    echo -e "Usage: $0 \nArguments:\n --source: source-only upload"
+    exit
+fi
+
+export VERSION=`head -n 1 debian/changelog | cut -f 2 -d' ' | cut -b 2- | cut -d')' -f 1`
+export APPNAME=`head -n 1 debian/changelog | cut -f 1 -d' '`
+export DEBFULLNAME="George Dumitrescu"
+export DEBEMAIL="dumitrescugeorge@gmail.com"
+
+# Copy files
+echo "Copying files into ./build"
+mkdir -p build
+cd ./build
+rm -rf $APPNAME-*
+mkdir -p $APPNAME-$VERSION
+cp -u -r ../share ../indicator-workspaces ../install ../Makefile ../AUTHORS ../COPYING ../INSTALL ../README $APPNAME-$VERSION
+tar -czf $APPNAME-$VERSION.orig.tar.gz $APPNAME-$VERSION/
+cd $APPNAME-$VERSION
+mkdir debian
+cp -u ../../debian/* debian/
+
+# Do the job
+dpkg-buildpackage $DPKG_FLAGS

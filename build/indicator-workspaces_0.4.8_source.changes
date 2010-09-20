@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Thu, 1 Sep 2010 22:20:00 +0300
+Source: indicator-workspaces
+Binary: indicator-workspaces
+Architecture: source
+Version: 0.4.8
+Distribution: lucid
+Urgency: high
+Maintainer: George Dumitrescu <dumitrescugeorge@gmail.com>
+Changed-By: George Dumitrescu <dumitrescugeorge@gmail.com>
+Description: 
+ indicator-workspaces - Workspace Indicator
+Changes: 
+ indicator-workspaces (0.4.8) lucid; urgency=high
+ .
+   * live update on workspaces name - Xoan Sampaiño
+Checksums-Sha1: 
+ 578587445e09a23b63221fae739fa310b3f33da1 1113 indicator-workspaces_0.4.8.dsc
+ f042bed795e73297b0572feb5757caa15ac1458c 19004 indicator-workspaces_0.4.8.tar.gz
+Checksums-Sha256: 
+ b535dc4c6ba567471fe1e0bf161f175fef09abc4bf92f8a290aa6e6103c750bb 1113 indicator-workspaces_0.4.8.dsc
+ 7a774bd856323d586b2652dff2691b5aa34bf5363c8ebb4618bc808debbea903 19004 indicator-workspaces_0.4.8.tar.gz
+Files: 
+ 9d94ff8f96e2041276f754e8a5ae0659 1113 gnome extra indicator-workspaces_0.4.8.dsc
+ 0caa841aa717aeb4798d5c12fe6d3fdb 19004 gnome extra indicator-workspaces_0.4.8.tar.gz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMfqhFAAoJEBXZqOpm4Iq8x9QH/0laygy4fJGuD6eWRKYB4gWj
+s1KE+FL7MbjzaI9KjWfvmtsKoNySegeoavFeXdxN0TzME1jIKUnV5q75JHWB05J3
+mDPpVAJmYczZNRmpTDVwAmKk0qrG69RY/gPdDEgb+SbEO0mwVU8CnxWt20IWiBko
+3ukfz6Q1cC2DAoeru2vY/8SGHI8QP6WRhmTu/0MngFFeafUjeekUKFYVkQj5c6Jl
+Hg++4TAK7GSLAqgfWEb12kLvJHbt8eOZq0PrbNKYHT3eVUYvfetbOX93V0uiaB27
+RbswSIpigemvB/KIhlD9k8xBICQoTUZLfvSEDcTcfOyJnz7jwd2wO7nxc2DlT20=
+=XTXp
+-----END PGP SIGNATURE-----

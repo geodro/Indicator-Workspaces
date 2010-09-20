@@ -1,0 +1,65 @@
+indicator-workspaces (0.4.8) lucid; urgency=high
+
+  * live update on workspaces name - Xoan Sampaiño
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 1 Sep 2010 22:20:00 +0300
+
+indicator-workspaces (0.4.6) lucid; urgency=high
+
+  * adding light icons
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 31 Aug 2010 00:25:00 +0300
+
+indicator-workspaces (0.4.4.2) lucid; urgency=high
+
+  * updating installation file 2
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 30 Aug 2010 23:50:00 +0300
+
+indicator-workspaces (0.4.4.1) lucid; urgency=high
+
+  * updating installation file
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 30 Aug 2010 20:10:00 +0300
+
+indicator-workspaces (0.4.4) lucid; urgency=high
+
+  * updating icon theme cache
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 30 Aug 2010 20:10:00 +0300
+
+indicator-workspaces (0.4.2) lucid; urgency=high
+
+  * bug fix - not showing icons
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 27 Aug 2010 01:10:00 +0300
+
+indicator-workspaces (0.4) lucid; urgency=high
+
+  * new icons indicating current workspace
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 27 Aug 2010 01:10:00 +0300
+
+indicator-workspaces (0.3) lucid; urgency=high
+
+  * bug fixes and updates
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 26 Aug 2010 23:15:00 +0300
+
+indicator-workspaces (0.2) lucid; urgency=high
+
+  * live update on workspace changes
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 26 Aug 2010 21:35:00 +0300
+
+indicator-workspaces (0.1.1) lucid; urgency=low
+
+  * draft support on workspace name - Xoan Sampaiño
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 24 Aug 2010 00:45:00 +0300
+
+indicator-workspaces (0.1) lucid; urgency=high
+
+  * Releasing version 0.1
+  
+ -- George Dumitrescu <dumitrescugeorge@gmail.com>  Thu, 24 Aug 2010 00:45:00 +0300

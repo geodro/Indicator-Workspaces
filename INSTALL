@@ -1,0 +1,11 @@
+Installation
+============
+    sudo make install
+
+Uninstallation
+=============
+    sudo make uninstall
+    
+
+
+
